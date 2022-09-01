@@ -6,26 +6,38 @@ orbs:
   # aws-cli: circleci/aws-cli@2.0.3
 # Define the jobs we want to run for this project
 jobs:
-  myjob1:  # Choose any name, such as `build`
-    # The primary container, where your job's commands will run
+  # Exercise: Creating a Simple Workflow
+  # Exercise: Environment Variables
+  # Exercise: Reusable Job Code 
+  print_greetings:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - print_pipeline_id:
+          id: << pipeline.id >>
+      - run: echo HELLO
+      - run: echo WORLD
+      - run: echo $_env_name
   create_infrastructure: 
     docker:
       - image: amazon/aws-cli
     steps:
       - checkout
       - run:
-        name: Create Cloudformation Stack
-        command: |
-          aws cloudformation deploy --template-file template.yml --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} --region us-east-1
+          name: Create Cloudformation Stack
+          command: |
+            aws cloudformation deploy \
+              --template-file template.yml \
+              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --region us-east-1
+      # Fail the job intentionally to simulate an error.
+      # Uncomment the line below if you want to fail the current step
+      # - run: return 1
+      - destroy_environment
 # Sequential workflow
 workflows:
   # Name the workflow
   myWorkflow:
     jobs:
-      - myjob1
+      - print_greetings
       - create_infrastructure
