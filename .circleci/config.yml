@@ -7,12 +7,12 @@ orbs:
 # Define the jobs we want to run for this project
 commands:
   # Exercise: Reusable Job Code
-  print_pipeline_id:
-    parameters:
-      id: 
-        type: string
-    steps:
-      - run: echo << parameters.id >>
+  # print_pipeline_id:
+  #   parameters:
+  #     id: 
+  #       type: string
+  #   steps:
+  #     - run: echo << parameters.id >>
   # Exercise - Rollback
   destroy_environment:
     steps:
