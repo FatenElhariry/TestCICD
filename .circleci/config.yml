@@ -89,7 +89,7 @@ jobs:
   # Exercise: Smoke Testing
   smoke_test_simulate:
     docker:
-      - image: alpine:latest
+      - image: amazon/aws-cli
     steps:
       - run:
           name: Test job
