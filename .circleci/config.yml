@@ -33,10 +33,27 @@ jobs:
       # Fail the job intentionally to simulate an error.
       # Uncomment the line below if you want to fail the current step
       # - run: return 1
+  configure_infrastructure:
+    docker:
+    - image: python:3.7-alpine3.11
+      steps:
+        - checkout
+        - add_ssh_keys:
+            # You can get this ID in the section where you registered the SSH Key
+            fingerprints: ["e9:55:aa:b4:5e:c0:07:6c:fb:e3:31:9f:c9:a3:c8:01"] 
+        - run:
+            name: Install Ansible
+            command: |
+              apk add --update ansible
+        - run:
+            name: Run Playbook and Configure server
+            command: |
+              ansible-playbook main.yml -i inventory.txt
 # Sequential workflow
 workflows:
   # Name the workflow
   myWorkflow:
     jobs:
       - print_greetings
-      - create_infrastructure
+      # - create_infrastructure
+      - configure_infrastructure
