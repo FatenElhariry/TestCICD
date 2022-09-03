@@ -66,6 +66,29 @@ jobs:
             else
               return 1
             fi
+    # Exercise: Smoke Testing
+    smoke_test_simulate:
+      docker:
+        - image: alpine:latest
+      steps:
+        - run:
+            name: Test job
+            # Fail the job intentionally to simulate an error.
+            command:  return 1
+        - destroy_environment    
+  # Exercise - Rollback
+  destroy_environment:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - run:
+          name: Destroy environment
+          # ${CIRCLE_WORKFLOW_ID} is a Built-in environment variable 
+          # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
+
 # Sequential workflow
 workflows:
   # Name the workflow
@@ -74,4 +97,5 @@ workflows:
       - print_greetings
       # - create_infrastructure
       # - configure_infrastructure
-      - smoke_test
+      # - smoke_test
+      - smoke_test_simulate
