@@ -114,5 +114,5 @@ workflows:
       - print_greetings
       # - create_infrastructure
       # - configure_infrastructure
-      # - smoke_test
+      - smoke_test
       - smoke_test_simulate
