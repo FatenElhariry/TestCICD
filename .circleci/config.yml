@@ -94,7 +94,15 @@ jobs:
       - run:
           name: Test job
           # Fail the job intentionally to simulate an error.
-          command:  return 1
+          command: |
+            URL="https://blog.udacity.com/"
+            # Test if website exists
+            if curl -s --head ${URL} 
+            then
+              return 0
+            else
+              return 1
+            fi
       - destroy_environment    
   # Exercise - Rollback
  
