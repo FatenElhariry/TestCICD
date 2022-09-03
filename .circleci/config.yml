@@ -66,16 +66,16 @@ jobs:
             else
               return 1
             fi
-    # Exercise: Smoke Testing
-    smoke_test_simulate:
-      docker:
-        - image: alpine:latest
-      steps:
-        - run:
-            name: Test job
-            # Fail the job intentionally to simulate an error.
-            command:  return 1
-        - destroy_environment    
+  # Exercise: Smoke Testing
+  smoke_test_simulate:
+    docker:
+      - image: alpine:latest
+    steps:
+      - run:
+          name: Test job
+          # Fail the job intentionally to simulate an error.
+          command:  return 1
+      - destroy_environment    
   # Exercise - Rollback
   destroy_environment:
     docker:
