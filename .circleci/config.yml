@@ -99,17 +99,17 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - run:
-        name: Test job
-        # Fail the job intentionally to simulate an error.
-        command: |
-          URL="https://blog.udacity.com/"
-          # Test if website exists
-          if curl -s --head ${URL} 
-          then
-            return 0
-          else
-            return 1
-          fi
+          name: Test job
+          # Fail the job intentionally to simulate an error.
+          command: |
+            URL="https://blog.udacity.com/"
+            # Test if website exists
+            if curl -s --head ${URL} 
+            then
+              return 0
+            else
+              return 1
+            fi
       - destroy_environment    
       
     # Executes the bucket.yml - Deploy an S3 bucket, and interface with that bucket to synchronize the files between local and the bucket.
@@ -139,4 +139,4 @@ workflows:
       # - create_infrastructure
       # - configure_infrastructure
       - smoke_test
-      - 
+      - create_and_deploy_front_end
